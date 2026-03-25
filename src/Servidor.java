@@ -28,7 +28,7 @@ public class Servidor {
             System.out.println(" Esperando clientes...");
             System.out.println("=========================");
         } catch (Exception e) {
-            System.err.println("Error al iniciar el servidor: " + e.getMessage())
+            System.err.println("Error al iniciar el servidor: " + e.getMessage());
             e.printStackTrace();
         }
     }
