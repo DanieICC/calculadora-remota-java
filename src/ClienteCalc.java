@@ -26,11 +26,83 @@ public class ClienteCalc {
             System.out.println("===========================");
 
             // Bucle principal: El menú se repite hasta que el usuario elija "Salir"
+            while (opcion != 5) {
+                System.out.println("\n--- MENÚ ---");
+                System.out.println("1. Suma");
+                System.out.println("2. Resta");
+                System.out.println("3. Multiplicación");
+                System.out.println("4. División");
+                System.out.println("5. Salir");
+                System.out.print("Elige una opción: ");
 
+                // Validar que el input sea un número entero
+                if (scanner.hasNextInt()) {
+                    opcion = scanner.nextInt();
+                    scanner.nextLine(); // Limpiar buffer
+                } else {
+                    System.out.println(" [!] Opción inválida. Ingresa un número del 1 al 5.");
+                    scanner.nextLine();
+                    continue;
+                } 
 
-            
+                // Las opciones del 1 al 4 necesita dos números que se leen aquí.
+                if (opcion >= 1 && opcion <= 4) {
+                    double a = 0, b = 0;
+
+                    System.out.println(" Número A: ");
+                    // Leer y validar el primer número
+                    if (scanner.hasNextDouble()) {
+                        a = scanner.nextDouble();
+                    } else {
+                        System.out.println(" [!] Número inválido.");
+                        scanner.nextLine();
+                        continue;
+                    }
+
+                    System.out.println(" Número B: ");
+                    // Leer y validar el segundo número
+                    if (scanner.hasNextDouble()) {
+                        b = scanner.nextDouble();
+                        scanner.nextLine(); // Limpiar buffer
+                    } else {
+                        System.out.println(" [!] Número inválido.");
+                        scanner.nextLine();
+                        continue;
+                    }
+
+                    // Ejecutar la operación elegida
+                    // Cada llamada viaja por red al servidor, que calcula y devuelve el resultado
+                    switch (opcion) {
+                        case 1:
+                            System.out.println("  Resultado: " + a + " + " + b + " = " + calc.sumar(a, b));
+                            break;
+                        case 2:
+                            System.out.println("  Resultado: " + a + " - " + b + " = " + calc.restar(a, b));
+                            break;
+                        case 3:
+                            System.out.println("  Resultado: " + a + " * " + b + " = " + calc.multiplicar(a, b));
+                            break;
+                        case 4:
+                            try {
+                                System.out.println("  Resultado: " + a + " / " + b + " = " + calc.dividir(a, b));
+                            } catch (Exception e) {
+                                System.out.println(" [!] " + e.getMessage());
+                            }
+                            break;
+                    } 
+                    
+                } else if (opcion == 5) {
+                    System.out.println("Cerrando Calculadora... Hasta luego.");
+                } else {
+                    System.out.println(" [!] Opción no válida. Elige un número entre 1 y 5.");
+                }
+            }
+
+            scanner.close();
+
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error en el cliente: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
